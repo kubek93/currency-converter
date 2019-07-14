@@ -1,8 +1,12 @@
-import React, { Component } from "react";
+import { connect } from "react-redux";
+import { FormattedMessage } from "react-intl";
 import { ThemeProvider } from "styled-components";
+import React from "react";
+import styled from "styled-components";
+
+import SelectLanguages from "./containers/SelectLanguages";
 import GlobalStyle from "./styles";
 import logo from "./logo.svg";
-import styled from "styled-components";
 
 const AppContainer = styled.div`
   text-align: center;
@@ -36,25 +40,28 @@ const AppIntro = styled.p`
   font-size: large;
 `;
 
-class App extends Component {
-  render() {
-    return (
-      <ThemeProvider theme={{ fontFamily: "Helvetica Neue" }}>
-        <>
-          <GlobalStyle />
-          <AppContainer>
-            <AppHeader>
-              <AppLogo src={logo} alt="logo" />
-              <AppTitle>Welcome to React</AppTitle>
-            </AppHeader>
-            <AppIntro>
-              To get started, edit <code>src/App.js</code> and save to reload.
-            </AppIntro>
-          </AppContainer>
-        </>
-      </ThemeProvider>
-    );
-  }
-}
+const App = () => (
+  <ThemeProvider theme={{ fontFamily: "Helvetica Neue" }}>
+    <>
+      <GlobalStyle />
+      <AppContainer>
+        <AppHeader>
+          <AppLogo src={logo} alt="logo" />
+          <AppTitle>
+            <FormattedMessage id="app.title" defaultMessage="app.title" />
+          </AppTitle>
+        </AppHeader>
+        <AppIntro>
+          <FormattedMessage id="app.intro" defaultMessage="app.intro" />
+          <SelectLanguages />
+        </AppIntro>
+      </AppContainer>
+    </>
+  </ThemeProvider>
+);
 
-export default App;
+const mapStateToProps = state => ({
+  languages: state.languages
+});
+
+export default connect(mapStateToProps)(App);

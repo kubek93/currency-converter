@@ -5,7 +5,7 @@ export default () => {
   return (
     <>
       <ResetStyles />
-      <GlobalStyles whiteColor />
+      <GlobalStyles />
     </>
   );
 };
