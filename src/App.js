@@ -5,6 +5,7 @@ import React from "react";
 import styled from "styled-components";
 
 import SelectLanguages from "./containers/SelectLanguages";
+import CurrencyConverter from "./containers/CurrencyConverter";
 import GlobalStyle from "./styles";
 import logo from "./logo.svg";
 
@@ -46,6 +47,7 @@ const App = () => (
       <GlobalStyle />
       <AppContainer>
         <AppHeader>
+          <SelectLanguages />
           <AppLogo src={logo} alt="logo" />
           <AppTitle>
             <FormattedMessage id="app.title" defaultMessage="app.title" />
@@ -53,7 +55,7 @@ const App = () => (
         </AppHeader>
         <AppIntro>
           <FormattedMessage id="app.intro" defaultMessage="app.intro" />
-          <SelectLanguages />
+          <CurrencyConverter />
         </AppIntro>
       </AppContainer>
     </>

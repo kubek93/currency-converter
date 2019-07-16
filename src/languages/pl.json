@@ -1,4 +1,6 @@
 {
-  "app.title": "Witamy w aplikacji React",
-  "app.intro": "By zacząć, edytuj plik <code>src/App.js</code> zapisz go oraz odśwież stronę."
+  "app.title": "Przelicznik walut",
+  "app.intro": "By zacząć, dodaj nową walutę przy pomocy przycisku poniżej +",
+  "button.add-new-currency": "+ Dodaj nową walutę",
+  "exchange.balance": "Saldo:"
 }

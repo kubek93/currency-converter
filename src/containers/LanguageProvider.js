@@ -13,8 +13,6 @@ const messages = {
 
 const LanguageProvider = props => {
   const { languages, children } = props;
-  console.log("languages", languages);
-  console.log("languages", messages[languages.currentLanguage]);
   return (
     <IntlProvider
       locale={languages.currentLanguage}
