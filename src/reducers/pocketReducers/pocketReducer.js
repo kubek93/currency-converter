@@ -21,25 +21,17 @@ const pocketReducer = (state = initalState, action) => {
     case 'CHANGE_CURRENT_POCKET':
       return { ...state, currentUserPocket: action.pocketCurrency };
     case 'EXCHANGE_MONEY':
-      const {
-        pocketExchangeFrom,
-        pocketExchangeTo,
-        pocketValueFrom,
-        pocketValueTo
-      } = action.pocketExchange;
+      const { pocketExchangeFrom, pocketExchangeTo, pocketValueFrom, pocketValueTo } = action.pocketExchange;
 
       return {
         ...state,
         userPocketsById: {
           ...state.userPocketsById,
           [pocketExchangeFrom]: {
-            amount:
-              parseFloat(state.userPocketsById[pocketExchangeFrom].amount) -
-              parseFloat(pocketValueFrom)
+            amount: parseFloat(state.userPocketsById[pocketExchangeFrom].amount) - parseFloat(pocketValueFrom)
           },
           [pocketExchangeTo]: {
-            amount:
-              parseFloat(state.userPocketsById[pocketExchangeTo].amount) + parseFloat(pocketValueTo)
+            amount: parseFloat(state.userPocketsById[pocketExchangeTo].amount) + parseFloat(pocketValueTo)
           }
         }
       };

@@ -3,6 +3,6 @@
   "app.intro": "To get started, add new currency using below button +",
   "button.add-new-currency": "+ Add new currency",
   "button.exchange": "Exchange",
-  "exchange.balance": "Balance:",
+  "exchange.balance": "Balance: ",
   "error.balance-exceeded": "balance exceeded"
 }

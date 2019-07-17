@@ -1,9 +1,13 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
-import DispalyBalance from '../components/LayoutElements/DisplayBalance';
+import DispalyBalance from './LayoutElements/DisplayBalance';
+import { InputCurrencyWrapper, InputCurrency } from './LayoutElements/InputCurrency';
+import { SelectCurrencyWrapper } from './LayoutElements/SelectCurrency';
 
-const CurrencyExchangeElement = styled.li`
+export const CurrencyExchangeList = styled.ul``;
+
+const CurrencyExchangeListElementWrapper = styled.li`
   background-color: ${props => (props.exchangeFrom ? 'transparent' : 'rgb(240, 240, 240)')};
   margin-top: ${props => (props.exchangeFrom ? '0' : '-10px')};
   display: flex;
@@ -11,41 +15,7 @@ const CurrencyExchangeElement = styled.li`
   padding: 30px 20px;
 `;
 
-const SelectCurrencyWrapper = styled.div`
-  text-align: left;
-
-  select {
-    background: transparent;
-    border: none;
-    font-size: 24px;
-    height: 30px;
-    line-height: 24px;
-  }
-`;
-
-const InputCurrencyWrapper = styled.div`
-  text-align: right;
-
-  span {
-    color: grey;
-    display: block;
-    font-size: 14px;
-    margin: 5px 0;
-    text-align: right;
-  }
-`;
-
-const InputCurrency = styled.input`
-  background: transparent;
-  border: none;
-  font-size: 24px;
-  height: 28px;
-  line-height: 24px;
-  text-align: right;
-  opacity: ${props => (props.shouldDisable ? '0.4' : '1')};
-`;
-
-export default props => {
+export const CurrencyExchangeListElement = props => {
   const {
     exchangeFrom,
     onChangePocket,
@@ -59,7 +29,7 @@ export default props => {
   const shouldDisableInput = exchangeFrom && pocketValue > userPocketsById[pocketExchange].amount;
 
   return (
-    <CurrencyExchangeElement exchangeFrom={exchangeFrom}>
+    <CurrencyExchangeListElementWrapper exchangeFrom={exchangeFrom}>
       <SelectCurrencyWrapper>
         <select onChange={onChangePocket} value={pocketExchange}>
           {userPocketsAllCurrencies.map(userPocketCurrency => {
@@ -79,10 +49,8 @@ export default props => {
           value={pocketValue}
           placeholder="0"
         />
-        {shouldDisableInput && (
-          <FormattedMessage id="error.balance-exceeded" defaultMessage="error.balance-exceeded" />
-        )}
+        {shouldDisableInput && <FormattedMessage id="error.balance-exceeded" defaultMessage="error.balance-exceeded" />}
       </InputCurrencyWrapper>
-    </CurrencyExchangeElement>
+    </CurrencyExchangeListElementWrapper>
   );
 };

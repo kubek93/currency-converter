@@ -1,18 +1,3 @@
-export const changecurrentUserPocket = pocketCurrency => ({
-  type: 'CHANGE_CURRENT_POCKET',
-  pocketCurrency
-});
-
-export const addNewPocket = pocketCurrency => ({
-  type: 'ADD_POCKET',
-  pocketCurrency
-});
-
-export const removePocket = pocketCurrency => ({
-  type: 'REMOVE_POCKET',
-  pocketCurrency
-});
-
 export const changePocketExchangeFrom = pocketCurrency => ({
   type: 'CHANGE_POCKET_EXCHANGE_FROM',
   pocketCurrency

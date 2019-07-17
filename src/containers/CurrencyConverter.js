@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
+import Button from '../components/LayoutElements/Button';
 import CurrencyCounter from '../components/LayoutElements/CurrencyCounter';
-import CurrencyExchangeElement from './CurrencyExchangeElement';
+import { CurrencyExchangeList, CurrencyExchangeListElement } from '../components/CurrencyExchange';
 import {
   changePocketExchangeFrom,
   changePocketExchangeTo,
@@ -14,30 +15,10 @@ import {
   exchangeMoney
 } from '../actions/pocketActions';
 
-const CurrencyExchangeWrapperParent = styled.div`
+const CurrencyConverterWrapper = styled.div`
   max-width: 400px;
   margin: 0 auto;
   position: relative;
-`;
-
-const CurrencyExchangeWrapper = styled.ul`
-  /* max-width: 400px;
-  margin: 50px auto 0; */
-`;
-
-const Button = styled.button`
-  background: red;
-  border-radius: 50px;
-  border: none;
-  color: white;
-  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
-  font-size: 22px;
-  font-weight: 600;
-  height: 50px;
-  margin-top: 25px;
-  opacity: ${props => (props.disabled ? '0.4' : '1')};
-  padding: 10px 0;
-  width: 100%;
 `;
 
 class CurrencyConverter extends React.PureComponent {
@@ -54,57 +35,41 @@ class CurrencyConverter extends React.PureComponent {
   };
 
   onChangePocketFrom = event => {
-    const {
-      userPocketsAllCurrencies,
-      changePocketExchangeTo,
-      changePocketExchangeFrom,
-      pocketExchange
-    } = this.props;
+    const { userPocketsAllCurrencies, changePocketExchangeTo, changePocketExchangeFrom, pocketExchange } = this.props;
     changePocketExchangeFrom(event.target.value);
 
     if (event.target.value === pocketExchange.pocketExchangeTo) {
-      const userPocketsAfterRemoveDuplicate = userPocketsAllCurrencies.filter(
-        el => el !== event.target.value
-      );
+      const userPocketsAfterRemoveDuplicate = userPocketsAllCurrencies.filter(el => el !== event.target.value);
       changePocketExchangeTo(userPocketsAfterRemoveDuplicate[0]);
     }
   };
 
   onChangePocketTo = event => {
-    const {
-      userPocketsAllCurrencies,
-      changePocketExchangeTo,
-      changePocketExchangeFrom,
-      pocketExchange
-    } = this.props;
+    const { userPocketsAllCurrencies, changePocketExchangeTo, changePocketExchangeFrom, pocketExchange } = this.props;
     changePocketExchangeTo(event.target.value);
 
     if (event.target.value === pocketExchange.pocketExchangeFrom) {
-      const userPocketsAfterRemoveDuplicate = userPocketsAllCurrencies.filter(
-        el => el !== event.target.value
-      );
+      const userPocketsAfterRemoveDuplicate = userPocketsAllCurrencies.filter(el => el !== event.target.value);
       changePocketExchangeFrom(userPocketsAfterRemoveDuplicate[0]);
     }
   };
 
   render() {
     const { currencies, userPocketsAllCurrencies, userPocketsById, pocketExchange } = this.props;
-
     const { pocketValueFrom, pocketValueTo, pocketExchangeFrom, pocketExchangeTo } = pocketExchange;
 
     const shouldDisableExchangeButton =
-      ['', ['0']].includes(pocketValueFrom) ||
-      pocketValueFrom > userPocketsById[pocketExchangeFrom].amount;
+      ['', ['0']].includes(pocketValueFrom) || pocketValueFrom > userPocketsById[pocketExchangeFrom].amount;
 
     return (
-      <CurrencyExchangeWrapperParent>
+      <CurrencyConverterWrapper>
         <CurrencyCounter
           currencies={currencies}
           pocketExchangeFrom={pocketExchangeFrom}
           pocketExchangeTo={pocketExchangeTo}
         />
-        <CurrencyExchangeWrapper>
-          <CurrencyExchangeElement
+        <CurrencyExchangeList>
+          <CurrencyExchangeListElement
             exchangeFrom={true}
             userPocketsAllCurrencies={userPocketsAllCurrencies}
             userPocketsById={userPocketsById}
@@ -113,7 +78,7 @@ class CurrencyConverter extends React.PureComponent {
             onChangePocket={this.onChangePocketFrom}
             onChangePocketValue={this.onChangePocketValueFrom}
           />
-          <CurrencyExchangeElement
+          <CurrencyExchangeListElement
             exchangeFrom={false}
             userPocketsAllCurrencies={userPocketsAllCurrencies}
             userPocketsById={userPocketsById}
@@ -122,11 +87,11 @@ class CurrencyConverter extends React.PureComponent {
             onChangePocket={this.onChangePocketTo}
             onChangePocketValue={this.onChangePocketValueTo}
           />
-        </CurrencyExchangeWrapper>
+        </CurrencyExchangeList>
         <Button disabled={shouldDisableExchangeButton} onClick={this.onClickExchange}>
           <FormattedMessage id="button.exchange" defaultMessage="Exchange Money" />
         </Button>
-      </CurrencyExchangeWrapperParent>
+      </CurrencyConverterWrapper>
     );
   }
 }
@@ -138,7 +103,7 @@ const mapStateToProps = state => ({
   pocketExchange: state.exchange
 });
 
-const mapDispatchToProps = (dispatch, getState) => ({
+const mapDispatchToProps = dispatch => ({
   changePocketExchangeFrom: currencyCode => dispatch(changePocketExchangeFrom(currencyCode)),
   changePocketExchangeTo: currencyCode => dispatch(changePocketExchangeTo(currencyCode)),
   changePocketExchangeValueFrom: (pocketValue, currencies) =>
