@@ -2,5 +2,6 @@
   "app.title": "Przelicznik walut",
   "app.intro": "By zacząć, dodaj nową walutę przy pomocy przycisku poniżej +",
   "button.add-new-currency": "+ Dodaj nową walutę",
+  "button.exchange": "Wymień",
   "exchange.balance": "Saldo:"
 }

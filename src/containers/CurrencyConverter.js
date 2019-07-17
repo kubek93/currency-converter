@@ -1,46 +1,33 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import { FormattedMessage } from "react-intl";
 import PropTypes from "prop-types";
 
+import CurrencyExchangeElement from "./CurrencyExchangeElement";
 import {
   changePocketExchangeFrom,
   changePocketExchangeTo
 } from "../actions/pocketActions";
-import DispalyBalance from "../components/LayoutElements/DisplayBalance";
 
 const CurrencyExchangeWrapper = styled.ul`
   max-width: 400px;
   margin: 50px auto 0;
 `;
 
-const CurrencyExchangeElement = styled.li`
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 20px;
-  background-color: ${props =>
-    props.colorGrey ? "rgb(240, 240, 240)" : "transparent"};
-`;
-
-const SelectCurrencyWrapper = styled.div`
-  text-align: left;
-
-  select {
-    background: transparent;
-    font-size: 24px;
-    line-height: 24px;
-    height: 30px;
-    border: none;
-  }
-`;
-
-const InputCurrency = styled.input`
-  background: transparent;
-  text-align: right;
-  font-size: 24px;
-  line-height: 24px;
-  height: 30px;
+const Button = styled.button`
+  background: red;
+  border-radius: 50px;
   border: none;
+  color: white;
+  cursor: ${props => (props.disabled ? "not-allowed" : "pointer")};
+  font-size: 22px;
+  font-weight: 600;
+  height: 50px;
+  margin-top: 25px;
+  opacity: ${props => (props.disabled ? "0.4" : "1")};
+  padding: 10px 0;
+  width: 100%;
 `;
 
 class CurrencyConverter extends React.Component {
@@ -48,9 +35,13 @@ class CurrencyConverter extends React.Component {
     console.log("componentDidMount CurrencyConverter");
   }
 
+  onClickExchange = () => {
+    console.log("onClickExchange");
+  };
+
   onChangePocketFrom = event => {
     const {
-      userPocketsAllIds,
+      userPocketsAllCurrencies,
       changePocketExchangeTo,
       changePocketExchangeFrom,
       pocketExchangeTo
@@ -58,7 +49,7 @@ class CurrencyConverter extends React.Component {
     changePocketExchangeFrom(event.target.value);
 
     if (event.target.value === pocketExchangeTo) {
-      const userPocketsAfterRemoveDuplicate = userPocketsAllIds.filter(
+      const userPocketsAfterRemoveDuplicate = userPocketsAllCurrencies.filter(
         el => el !== event.target.value
       );
       changePocketExchangeTo(userPocketsAfterRemoveDuplicate[0]);
@@ -67,7 +58,7 @@ class CurrencyConverter extends React.Component {
 
   onChangePocketTo = event => {
     const {
-      userPocketsAllIds,
+      userPocketsAllCurrencies,
       changePocketExchangeTo,
       changePocketExchangeFrom,
       pocketExchangeFrom
@@ -75,7 +66,7 @@ class CurrencyConverter extends React.Component {
     changePocketExchangeTo(event.target.value);
 
     if (event.target.value === pocketExchangeFrom) {
-      const userPocketsAfterRemoveDuplicate = userPocketsAllIds.filter(
+      const userPocketsAfterRemoveDuplicate = userPocketsAllCurrencies.filter(
         el => el !== event.target.value
       );
       changePocketExchangeFrom(userPocketsAfterRemoveDuplicate[0]);
@@ -84,7 +75,7 @@ class CurrencyConverter extends React.Component {
 
   render() {
     const {
-      userPocketsAllIds,
+      userPocketsAllCurrencies,
       userPocketsById,
       pocketExchangeFrom,
       pocketExchangeTo
@@ -92,47 +83,25 @@ class CurrencyConverter extends React.Component {
 
     return (
       <div>
-        {/* <SelectCurrencies /> */}
         <CurrencyExchangeWrapper>
-          <CurrencyExchangeElement>
-            <SelectCurrencyWrapper>
-              <select
-                onChange={this.onChangePocketFrom}
-                value={pocketExchangeFrom}
-              >
-                {userPocketsAllIds.map(userPocketCurrency => {
-                  return (
-                    <option key={userPocketCurrency}>
-                      {userPocketCurrency}
-                    </option>
-                  );
-                })}
-              </select>
-              <DispalyBalance
-                currencyType={pocketExchangeFrom}
-                currencyValue={userPocketsById[pocketExchangeFrom].amount}
-              />
-            </SelectCurrencyWrapper>
-            <InputCurrency type="text" value="0" />
-          </CurrencyExchangeElement>
-          <CurrencyExchangeElement colorGrey>
-            <SelectCurrencyWrapper>
-              <select onChange={this.onChangePocketTo} value={pocketExchangeTo}>
-                {userPocketsAllIds.map(userPocketCurrency => {
-                  return (
-                    <option key={userPocketCurrency}>
-                      {userPocketCurrency}
-                    </option>
-                  );
-                })}
-              </select>
-              <DispalyBalance
-                currencyType={pocketExchangeTo}
-                currencyValue={userPocketsById[pocketExchangeTo].amount}
-              />
-            </SelectCurrencyWrapper>
-            <InputCurrency type="text" value="0" />
-          </CurrencyExchangeElement>
+          <CurrencyExchangeElement
+            userPocketsAllCurrencies={userPocketsAllCurrencies}
+            userPocketsById={userPocketsById}
+            pocketExchange={pocketExchangeFrom}
+            onChangePocket={this.onChangePocketFrom}
+          />
+          <CurrencyExchangeElement
+            userPocketsAllCurrencies={userPocketsAllCurrencies}
+            userPocketsById={userPocketsById}
+            pocketExchange={pocketExchangeTo}
+            onChangePocket={this.onChangePocketTo}
+          />
+          <Button onClick={this.onClickExchange}>
+            <FormattedMessage
+              id="button.exchange"
+              defaultMessage="button.exchange"
+            />
+          </Button>
         </CurrencyExchangeWrapper>
       </div>
     );
@@ -140,7 +109,7 @@ class CurrencyConverter extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  userPocketsAllIds: state.pocket.userPocketsAllIds,
+  userPocketsAllCurrencies: state.pocket.userPocketsAllIds,
   userPocketsById: state.pocket.userPocketsById,
   pocketExchangeFrom: state.exchange.pocketExchangeFrom,
   pocketExchangeTo: state.exchange.pocketExchangeTo
@@ -154,7 +123,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 CurrencyConverter.propTypes = {
-  userPocketsAllIds: PropTypes.arrayOf(PropTypes.string).isRequired
+  userPocketsAllCurrencies: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 export default connect(

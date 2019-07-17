@@ -32,3 +32,17 @@ export const changePocketExchangeTo = pocketCurrency => {
     pocketCurrency
   };
 };
+
+export const changePocketExchangeValueFrom = pocketValue => {
+  return {
+    type: "CHANGE_POCKET_EXCHANGE_VALUE_FROM",
+    pocketValue
+  };
+};
+
+export const changePocketExchangeValueTo = pocketValue => {
+  return {
+    type: "CHANGE_POCKET_EXCHANGE_VALUE_TO",
+    pocketValue
+  };
+};
