@@ -4,15 +4,24 @@ import { connect } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import PropTypes from "prop-types";
 
+import CurrencyCounter from "../components/LayoutElements/CurrencyCounter";
 import CurrencyExchangeElement from "./CurrencyExchangeElement";
 import {
   changePocketExchangeFrom,
-  changePocketExchangeTo
+  changePocketExchangeTo,
+  changePocketExchangeValueFrom,
+  changePocketExchangeValueTo
 } from "../actions/pocketActions";
 
-const CurrencyExchangeWrapper = styled.ul`
+const CurrencyExchangeWrapperParent = styled.div`
   max-width: 400px;
-  margin: 50px auto 0;
+  margin: 0 auto;
+  position: relative;
+`;
+
+const CurrencyExchangeWrapper = styled.ul`
+  /* max-width: 400px;
+  margin: 50px auto 0; */
 `;
 
 const Button = styled.button`
@@ -37,6 +46,21 @@ class CurrencyConverter extends React.Component {
 
   onClickExchange = () => {
     console.log("onClickExchange");
+  };
+
+  onChangePocketValueFrom = event => {
+    this.props.changePocketExchangeValueFrom(
+      event.target.value,
+      this.props.currencies
+    );
+  };
+
+  onChangePocketValueTo = event => {
+    console.log(event.target.value);
+    this.props.changePocketExchangeValueTo(
+      event.target.value,
+      this.props.currencies
+    );
   };
 
   onChangePocketFrom = event => {
@@ -75,55 +99,92 @@ class CurrencyConverter extends React.Component {
 
   render() {
     const {
+      currencies,
       userPocketsAllCurrencies,
       userPocketsById,
       pocketExchangeFrom,
-      pocketExchangeTo
+      pocketExchangeTo,
+      pocketValueFrom,
+      pocketValueTo
     } = this.props;
 
+    console.log("pocketValueFrom", pocketValueFrom);
+
+    const shouldDisableExchangeButton =
+      pocketValueFrom === "0" ||
+      pocketValueFrom === "" ||
+      pocketValueFrom > userPocketsById[pocketExchangeFrom].amount;
+
     return (
-      <div>
+      <CurrencyExchangeWrapperParent>
+        <CurrencyCounter
+          currencies={currencies}
+          pocketExchangeFrom={pocketExchangeFrom}
+          pocketExchangeTo={pocketExchangeTo}
+        />
         <CurrencyExchangeWrapper>
           <CurrencyExchangeElement
+            exchangeFrom={true}
             userPocketsAllCurrencies={userPocketsAllCurrencies}
             userPocketsById={userPocketsById}
+            pocketValue={pocketValueFrom}
             pocketExchange={pocketExchangeFrom}
             onChangePocket={this.onChangePocketFrom}
+            onChangePocketValue={this.onChangePocketValueFrom}
           />
           <CurrencyExchangeElement
+            exchangeFrom={false}
             userPocketsAllCurrencies={userPocketsAllCurrencies}
             userPocketsById={userPocketsById}
+            pocketValue={pocketValueTo}
             pocketExchange={pocketExchangeTo}
             onChangePocket={this.onChangePocketTo}
+            onChangePocketValue={this.onChangePocketValueTo}
           />
-          <Button onClick={this.onClickExchange}>
-            <FormattedMessage
-              id="button.exchange"
-              defaultMessage="button.exchange"
-            />
-          </Button>
         </CurrencyExchangeWrapper>
-      </div>
+        <Button
+          disabled={shouldDisableExchangeButton}
+          onClick={this.onClickExchange}
+        >
+          <FormattedMessage
+            id="button.exchange"
+            defaultMessage="Exchange Money"
+          />
+        </Button>
+      </CurrencyExchangeWrapperParent>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  userPocketsAllCurrencies: state.pocket.userPocketsAllIds,
-  userPocketsById: state.pocket.userPocketsById,
-  pocketExchangeFrom: state.exchange.pocketExchangeFrom,
-  pocketExchangeTo: state.exchange.pocketExchangeTo
-});
+const mapStateToProps = state => {
+  console.log("state", state);
+
+  return {
+    currencies: state.currenct.currency.currencyExchangeRate,
+    userPocketsAllCurrencies: state.pocket.userPocketsAllIds,
+    userPocketsById: state.pocket.userPocketsById,
+    pocketExchangeFrom: state.exchange.pocketExchangeFrom,
+    pocketExchangeTo: state.exchange.pocketExchangeTo,
+    pocketValueFrom: state.exchange.pocketValueFrom,
+    pocketValueTo: state.exchange.pocketValueTo
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   changePocketExchangeFrom: currencyCode =>
     dispatch(changePocketExchangeFrom(currencyCode)),
   changePocketExchangeTo: currencyCode =>
-    dispatch(changePocketExchangeTo(currencyCode))
+    dispatch(changePocketExchangeTo(currencyCode)),
+  changePocketExchangeValueFrom: (pocketValue, currencies) =>
+    dispatch(changePocketExchangeValueFrom(pocketValue, currencies)),
+  changePocketExchangeValueTo: (pocketValue, currencies) =>
+    dispatch(changePocketExchangeValueTo(pocketValue, currencies))
 });
 
 CurrencyConverter.propTypes = {
-  userPocketsAllCurrencies: PropTypes.arrayOf(PropTypes.string).isRequired
+  userPocketsAllCurrencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  pocketValueFrom: PropTypes.string.isRequired,
+  pocketValueTo: PropTypes.string.isRequired
 };
 
 export default connect(

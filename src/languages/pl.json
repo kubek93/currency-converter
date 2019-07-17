@@ -3,5 +3,6 @@
   "app.intro": "By zacząć, dodaj nową walutę przy pomocy przycisku poniżej +",
   "button.add-new-currency": "+ Dodaj nową walutę",
   "button.exchange": "Wymień",
-  "exchange.balance": "Saldo:"
+  "exchange.balance": "Saldo:",
+  "error.balance-exceeded": "saldo przekroczone"
 }

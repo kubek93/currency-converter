@@ -1,5 +1,12 @@
+import { TypeOfCurrency } from "../../actions/currencyActions";
+
 const initialState = {
-  selectedCurrencies: []
+  selectedCurrencies: [],
+  currencyExchangeRate: {
+    [TypeOfCurrency.PLN]: 4.2555,
+    [TypeOfCurrency.USD]: 1.1223,
+    [TypeOfCurrency.EUR]: 1
+  }
 };
 
 const currentLanguageReducer = (state = initialState, action) => {
