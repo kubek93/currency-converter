@@ -1,12 +1,11 @@
-import React from "react";
-import { FormattedMessage } from "react-intl";
-import styled from "styled-components";
-import DispalyBalance from "../components/LayoutElements/DisplayBalance";
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import styled from 'styled-components';
+import DispalyBalance from '../components/LayoutElements/DisplayBalance';
 
 const CurrencyExchangeElement = styled.li`
-  background-color: ${props =>
-    props.exchangeFrom ? "transparent" : "rgb(240, 240, 240)"};
-  margin-top: ${props => (props.exchangeFrom ? "0" : "-10px")};
+  background-color: ${props => (props.exchangeFrom ? 'transparent' : 'rgb(240, 240, 240)')};
+  margin-top: ${props => (props.exchangeFrom ? '0' : '-10px')};
   display: flex;
   justify-content: space-between;
   padding: 30px 20px;
@@ -43,7 +42,7 @@ const InputCurrency = styled.input`
   height: 28px;
   line-height: 24px;
   text-align: right;
-  opacity: ${props => (props.shouldDisable ? "0.4" : "1")};
+  opacity: ${props => (props.shouldDisable ? '0.4' : '1')};
 `;
 
 export default props => {
@@ -57,45 +56,31 @@ export default props => {
     userPocketsById
   } = props;
 
-  console.log(props);
-
-  const shouldDisable =
-    exchangeFrom && pocketValue > userPocketsById[pocketExchange].amount;
-  console.log(
-    "shouldDisable",
-    shouldDisable,
-    pocketValue,
-    userPocketsById[pocketExchange].amount
-  );
+  const shouldDisableInput = exchangeFrom && pocketValue > userPocketsById[pocketExchange].amount;
 
   return (
     <CurrencyExchangeElement exchangeFrom={exchangeFrom}>
       <SelectCurrencyWrapper>
         <select onChange={onChangePocket} value={pocketExchange}>
           {userPocketsAllCurrencies.map(userPocketCurrency => {
-            return (
-              <option key={userPocketCurrency}>{userPocketCurrency}</option>
-            );
+            return <option key={userPocketCurrency}>{userPocketCurrency}</option>;
           })}
         </select>
         <DispalyBalance
           currencyType={pocketExchange}
-          currencyValue={userPocketsById[pocketExchange].amount}
+          currencyValue={userPocketsById[pocketExchange].amount.toFixed(2)}
         />
       </SelectCurrencyWrapper>
       <InputCurrencyWrapper>
         <InputCurrency
           type="text"
-          shouldDisable={shouldDisable}
+          shouldDisable={shouldDisableInput}
           onChange={onChangePocketValue}
           value={pocketValue}
           placeholder="0"
         />
-        {shouldDisable && (
-          <FormattedMessage
-            id="error.balance-exceeded"
-            defaultMessage="error.balance-exceeded"
-          />
+        {shouldDisableInput && (
+          <FormattedMessage id="error.balance-exceeded" defaultMessage="error.balance-exceeded" />
         )}
       </InputCurrencyWrapper>
     </CurrencyExchangeElement>

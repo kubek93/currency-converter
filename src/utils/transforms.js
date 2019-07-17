@@ -14,9 +14,9 @@ export const transformMoney = inputValue => {
 
   if (regex.test(priceAfterReplaceComma)) {
     return priceAfterReplaceComma;
-  } else {
-    return inputValue.substring(0, inputValue.length - 1);
   }
+
+  return inputValue.substring(0, inputValue.length - 1);
 };
 
 export const transformCurrencySymbol = currencyName => {
@@ -33,9 +33,10 @@ export const exchangeFromTo = (
     (transformMoney(inputValue) * currencies[currencyTo]) /
     currencies[currencyFrom];
   const numberAfterPositionFix = Number.parseFloat(summaryNumber).toFixed(2);
+
   if (numberAfterPositionFix === "0.00") {
     return "";
-  } else {
-    return numberAfterPositionFix;
   }
+
+  return numberAfterPositionFix;
 };

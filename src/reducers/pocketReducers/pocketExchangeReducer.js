@@ -46,6 +46,12 @@ const pocketReducer = (state = initalState, action) => {
         ),
         pocketValueTo: transformMoney(action.pocketValue)
       };
+    case "EXCHANGE_MONEY":
+      return {
+        ...state,
+        pocketValueFrom: initalState.pocketValueFrom,
+        pocketValueTo: initalState.pocketValueTo
+      };
     default:
       return state;
   }

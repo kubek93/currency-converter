@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-
+import PropTypes from "prop-types";
 import {
   exchangeFromTo,
   transformCurrencySymbol
 } from "../../utils/transforms";
 
-const CurrencyCounter = styled.div`
+const CurrencyCounterWrapper = styled.div`
   background: white;
   border-radius: 25px;
   border: 1px solid rgb(240, 240, 240);
@@ -19,7 +19,11 @@ const CurrencyCounter = styled.div`
   width: 50%;
 `;
 
-export default ({ currencies, pocketExchangeFrom, pocketExchangeTo }) => {
+const CurrencyCounter = ({
+  currencies,
+  pocketExchangeFrom,
+  pocketExchangeTo
+}) => {
   const currencySymbolFrom = transformCurrencySymbol(pocketExchangeFrom);
   const currencySymbolTo = transformCurrencySymbol(pocketExchangeTo);
   const countedExchangeValue = exchangeFromTo(
@@ -30,8 +34,16 @@ export default ({ currencies, pocketExchangeFrom, pocketExchangeTo }) => {
   );
 
   return (
-    <CurrencyCounter>
+    <CurrencyCounterWrapper>
       <span>{`1 ${currencySymbolFrom} = ${countedExchangeValue} ${currencySymbolTo}`}</span>
-    </CurrencyCounter>
+    </CurrencyCounterWrapper>
   );
 };
+
+CurrencyCounter.propTypes = {
+  currencies: PropTypes.shape({}).isRequired,
+  pocketExchangeFrom: PropTypes.string.isRequired,
+  pocketExchangeTo: PropTypes.string.isRequired
+};
+
+export default CurrencyCounter;
