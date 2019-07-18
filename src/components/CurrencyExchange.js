@@ -1,6 +1,8 @@
-import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import PropTypes from 'prop-types';
+import React from 'react';
 import styled from 'styled-components';
+
 import DispalyBalance from './LayoutElements/DisplayBalance';
 import { InputCurrencyWrapper, InputCurrency } from './LayoutElements/InputCurrency';
 import { SelectCurrencyWrapper } from './LayoutElements/SelectCurrency';
@@ -53,4 +55,18 @@ export const CurrencyExchangeListElement = props => {
       </InputCurrencyWrapper>
     </CurrencyExchangeListElementWrapper>
   );
+};
+
+CurrencyExchangeListElement.defaultProps = {
+  userPocketsAllCurrencies: []
+};
+
+CurrencyExchangeListElement.propTypes = {
+  // exchangeFrom,
+  // onChangePocket,
+  // onChangePocketValue,
+  // pocketExchange,
+  // pocketValue,
+  userPocketsAllCurrencies: PropTypes.arrayOf(PropTypes.string)
+  // userPocketsById,
 };

@@ -8,7 +8,7 @@ export const transformSelectOptionsBasedOnCurrencies = currenciesArray => {
 };
 
 export const transformMoney = inputValue => {
-  const regex = /^\d+(?:[.]\d{0,2}|$)$/;
+  const regex = /^\d{0,12}(?:[.]\d{0,2}|$)$/;
   let priceAfterReplaceComma = inputValue.toString().replace(/,/g, '.');
   priceAfterReplaceComma = priceAfterReplaceComma.replace(',', '.');
 

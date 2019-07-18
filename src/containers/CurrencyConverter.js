@@ -7,12 +7,14 @@ import PropTypes from 'prop-types';
 import Button from '../components/LayoutElements/Button';
 import CurrencyCounter from '../components/LayoutElements/CurrencyCounter';
 import { CurrencyExchangeList, CurrencyExchangeListElement } from '../components/CurrencyExchange';
+import { PocketSwitch } from '../components/LayoutElements/PocketSwitch';
 import {
   changePocketExchangeFrom,
   changePocketExchangeTo,
   changePocketExchangeValueFrom,
   changePocketExchangeValueTo,
-  exchangeMoney
+  exchangeMoney,
+  replacePocketsPosition
 } from '../actions/pocketActions';
 
 const CurrencyConverterWrapper = styled.div`
@@ -54,6 +56,10 @@ class CurrencyConverter extends React.PureComponent {
     }
   };
 
+  replacePocketsPosition = () => {
+    this.props.replacePocketsPosition();
+  };
+
   render() {
     const { currencies, userPocketsAllCurrencies, userPocketsById, pocketExchange } = this.props;
     const { pocketValueFrom, pocketValueTo, pocketExchangeFrom, pocketExchangeTo } = pocketExchange;
@@ -63,6 +69,9 @@ class CurrencyConverter extends React.PureComponent {
 
     return (
       <CurrencyConverterWrapper>
+        <PocketSwitch>
+          <button onClick={this.replacePocketsPosition}>+</button>
+        </PocketSwitch>
         <CurrencyCounter
           currencies={currencies}
           pocketExchangeFrom={pocketExchangeFrom}
@@ -110,7 +119,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(changePocketExchangeValueFrom(pocketValue, currencies)),
   changePocketExchangeValueTo: (pocketValue, currencies) =>
     dispatch(changePocketExchangeValueTo(pocketValue, currencies)),
-  exchangeMoney: pocketExchange => dispatch(exchangeMoney(pocketExchange))
+  exchangeMoney: pocketExchange => dispatch(exchangeMoney(pocketExchange)),
+  replacePocketsPosition: pocketExchange => dispatch(replacePocketsPosition())
 });
 
 CurrencyConverter.propTypes = {

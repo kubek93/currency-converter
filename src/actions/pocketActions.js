@@ -24,3 +24,7 @@ export const exchangeMoney = pocketExchange => ({
   type: 'EXCHANGE_MONEY',
   pocketExchange
 });
+
+export const replacePocketsPosition = () => ({
+  type: 'REPLACE_POCKETS_POSITION'
+});
