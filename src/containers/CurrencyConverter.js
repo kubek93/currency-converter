@@ -21,6 +21,7 @@ const CurrencyConverterWrapper = styled.div`
   max-width: 400px;
   margin: 0 auto;
   position: relative;
+  margin-top: 35px;
 `;
 
 class CurrencyConverter extends React.PureComponent {

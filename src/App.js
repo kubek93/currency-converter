@@ -1,13 +1,13 @@
-import { connect } from "react-redux";
-import { FormattedMessage } from "react-intl";
-import { ThemeProvider } from "styled-components";
-import React from "react";
-import styled from "styled-components";
+import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
+import { ThemeProvider } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 
-import SelectLanguages from "./containers/SelectLanguages";
-import CurrencyConverter from "./containers/CurrencyConverter";
-import GlobalStyle from "./styles";
-import logo from "./logo.svg";
+import SelectLanguages from './containers/SelectLanguages';
+import CurrencyConverter from './containers/CurrencyConverter';
+import GlobalStyle from './styles';
+import logo from './logo.svg';
 
 const AppContainer = styled.div`
   text-align: center;
@@ -15,18 +15,19 @@ const AppContainer = styled.div`
 
 const AppHeader = styled.header`
   background-color: #222;
-  height: 150px;
   padding: 20px;
   color: white;
 `;
 
 const AppTitle = styled.h1`
   font-size: 3.5em;
+  padding: 5px 0 35px;
 `;
 
 const AppLogo = styled.img`
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
+  padding: 35px 0;
   @keyframes App-logo-spin {
     from {
       transform: rotate(0deg);
@@ -42,7 +43,7 @@ const AppIntro = styled.p`
 `;
 
 const App = () => (
-  <ThemeProvider theme={{ fontFamily: "Helvetica Neue" }}>
+  <ThemeProvider theme={{ fontFamily: 'Helvetica Neue' }}>
     <>
       <GlobalStyle />
       <AppContainer>
@@ -54,7 +55,7 @@ const App = () => (
           </AppTitle>
         </AppHeader>
         <AppIntro>
-          <FormattedMessage id="app.intro" defaultMessage="app.intro" />
+          {/* <FormattedMessage id="app.intro" defaultMessage="app.intro" /> */}
           <CurrencyConverter />
         </AppIntro>
       </AppContainer>
