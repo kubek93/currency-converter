@@ -1,4 +1,4 @@
-import { TypeOfCurrency } from "../../actions/currencyActions";
+import { TypeOfCurrency, currencyActionsType as actions } from '../../utils/constants';
 
 const initialState = {
   selectedCurrencies: [],
@@ -11,9 +11,9 @@ const initialState = {
 
 const currentLanguageReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "ADD_CURRENCY":
+    case actions.addCurrency:
       return { ...state, selectedCurrencies: action.languageName };
-    case "REMOVE_CURRENCY":
+    case actions.removeCurrency:
       return { ...state, selectedCurrencies: action.languageName };
     default:
       return state;

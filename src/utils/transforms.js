@@ -1,4 +1,4 @@
-import { CURRENCY_SYMBOL } from './constants';
+import { currencySymbol } from './constants';
 
 export const transformSelectOptionsBasedOnCurrencies = currenciesArray => {
   return currenciesArray.map(currencySymbol => ({
@@ -32,7 +32,7 @@ export const transformMoney = (inputValue = '', oldValue = '') => {
 };
 
 export const transformToCurrencySymbol = currencyName => {
-  return CURRENCY_SYMBOL[currencyName];
+  return currencySymbol[currencyName];
 };
 
 export const exchangeFromTo = (inputValue, currencies, currencyFrom, currencyTo, oldValue) => {

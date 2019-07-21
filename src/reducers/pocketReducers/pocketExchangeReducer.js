@@ -1,4 +1,4 @@
-import { TypeOfCurrency } from '../../actions/currencyActions';
+import { TypeOfCurrency, pocketActionsTypes as actions } from '../../utils/constants';
 import { transformMoney, exchangeFromTo } from '../../utils/transforms';
 
 const initalState = {
@@ -10,21 +10,21 @@ const initalState = {
 
 const pocketReducer = (state = initalState, action) => {
   switch (action.type) {
-    case 'CHANGE_POCKET_EXCHANGE_FROM':
+    case actions.changePocketExchangeFrom:
       return {
         ...state,
         pocketExchangeFrom: action.pocketCurrency,
         pocketValueFrom: '',
         pocketValueTo: ''
       };
-    case 'CHANGE_POCKET_EXCHANGE_TO':
+    case actions.changePocketExchangeTo:
       return {
         ...state,
         pocketExchangeTo: action.pocketCurrency,
         pocketValueFrom: '',
         pocketValueTo: ''
       };
-    case 'CHANGE_POCKET_EXCHANGE_VALUE_FROM':
+    case actions.changePocketExchangeValueFrom:
       return {
         ...state,
         pocketValueFrom: transformMoney(action.pocketValue, state.pocketValueFrom),
@@ -36,7 +36,7 @@ const pocketReducer = (state = initalState, action) => {
           state.pocketValueFrom
         )
       };
-    case 'CHANGE_POCKET_EXCHANGE_VALUE_TO':
+    case actions.changePocketExchangeValueTo:
       return {
         ...state,
         pocketValueFrom: exchangeFromTo(
@@ -48,13 +48,13 @@ const pocketReducer = (state = initalState, action) => {
         ),
         pocketValueTo: transformMoney(action.pocketValue, state.pocketValueTo)
       };
-    case 'EXCHANGE_MONEY':
+    case actions.exchangeMoney:
       return {
         ...state,
         pocketValueFrom: initalState.pocketValueFrom,
         pocketValueTo: initalState.pocketValueTo
       };
-    case 'REPLACE_POCKETS_POSITION':
+    case actions.replacePocketsPosition:
       return {
         ...state,
         pocketExchangeFrom: state.pocketExchangeTo,
