@@ -27,12 +27,13 @@ const pocketReducer = (state = initalState, action) => {
     case 'CHANGE_POCKET_EXCHANGE_VALUE_FROM':
       return {
         ...state,
-        pocketValueFrom: transformMoney(action.pocketValue),
+        pocketValueFrom: transformMoney(action.pocketValue, state.pocketValueFrom),
         pocketValueTo: exchangeFromTo(
           action.pocketValue,
           action.currencies,
           state.pocketExchangeFrom,
-          state.pocketExchangeTo
+          state.pocketExchangeTo,
+          state.pocketValueFrom
         )
       };
     case 'CHANGE_POCKET_EXCHANGE_VALUE_TO':
@@ -42,9 +43,10 @@ const pocketReducer = (state = initalState, action) => {
           action.pocketValue,
           action.currencies,
           state.pocketExchangeTo,
-          state.pocketExchangeFrom
+          state.pocketExchangeFrom,
+          state.pocketValueTo
         ),
-        pocketValueTo: transformMoney(action.pocketValue)
+        pocketValueTo: transformMoney(action.pocketValue, state.pocketValueTo)
       };
     case 'EXCHANGE_MONEY':
       return {

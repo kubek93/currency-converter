@@ -66,7 +66,8 @@ class CurrencyConverter extends React.PureComponent {
     const { pocketValueFrom, pocketValueTo, pocketExchangeFrom, pocketExchangeTo } = pocketExchange;
 
     const shouldDisableExchangeButton =
-      ['', ['0']].includes(pocketValueFrom) || pocketValueFrom > userPocketsById[pocketExchangeFrom].amount;
+      parseFloat(pocketValueFrom) === 0 ||
+      (['', ['0']].includes(pocketValueFrom) || pocketValueFrom > userPocketsById[pocketExchangeFrom].amount);
 
     return (
       <CurrencyConverterWrapper>
