@@ -1,7 +1,6 @@
-import { TypeOfCurrency } from '../../actions/currencyActions';
+import { TypeOfCurrency, pocketActionsTypes as actions } from '../../utils/constants';
 
 const initalState = {
-  currentUserPocket: TypeOfCurrency.PLN,
   userPocketsAllIds: [TypeOfCurrency.PLN, TypeOfCurrency.USD, TypeOfCurrency.EUR],
   userPocketsById: {
     [TypeOfCurrency.PLN]: {
@@ -18,9 +17,7 @@ const initalState = {
 
 const pocketReducer = (state = initalState, action) => {
   switch (action.type) {
-    case 'CHANGE_CURRENT_POCKET':
-      return { ...state, currentUserPocket: action.pocketCurrency };
-    case 'EXCHANGE_MONEY':
+    case actions.exchangeMoney:
       const { pocketExchangeFrom, pocketExchangeTo, pocketValueFrom, pocketValueTo } = action.pocketExchange;
 
       return {

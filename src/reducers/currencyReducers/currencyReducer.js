@@ -1,20 +1,28 @@
-import { TypeOfCurrency } from "../../actions/currencyActions";
+import isEmpty from 'lodash/isEmpty';
+import pick from 'lodash/pick';
+import { TypeOfCurrency, currencyActionsType as actions } from '../../utils/constants';
 
 const initialState = {
   selectedCurrencies: [],
-  currencyExchangeRate: {
-    [TypeOfCurrency.PLN]: 4.2555,
-    [TypeOfCurrency.USD]: 1.1223,
-    [TypeOfCurrency.EUR]: 1
-  }
+  currencyExchangeRate: {}
 };
 
 const currentLanguageReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "ADD_CURRENCY":
+    case actions.addCurrency:
       return { ...state, selectedCurrencies: action.languageName };
-    case "REMOVE_CURRENCY":
+    case actions.removeCurrency:
       return { ...state, selectedCurrencies: action.languageName };
+    case actions.updateCurrencies: {
+      if (!isEmpty(action.currencies)) {
+        return {
+          ...state,
+          currencyExchangeRate: pick(action.currencies, [TypeOfCurrency.PLN, TypeOfCurrency.USD, TypeOfCurrency.EUR])
+        };
+      }
+
+      return state;
+    }
     default:
       return state;
   }

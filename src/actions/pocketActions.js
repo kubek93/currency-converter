@@ -1,30 +1,32 @@
+import { pocketActionsTypes as actions } from '../utils/constants';
+
 export const changePocketExchangeFrom = pocketCurrency => ({
-  type: 'CHANGE_POCKET_EXCHANGE_FROM',
+  type: actions.changePocketExchangeFrom,
   pocketCurrency
 });
 
 export const changePocketExchangeTo = pocketCurrency => ({
-  type: 'CHANGE_POCKET_EXCHANGE_TO',
+  type: actions.changePocketExchangeTo,
   pocketCurrency
 });
 
 export const changePocketExchangeValueFrom = (pocketValue, currencies) => ({
-  type: 'CHANGE_POCKET_EXCHANGE_VALUE_FROM',
+  type: actions.changePocketExchangeValueFrom,
   pocketValue,
   currencies
 });
 
 export const changePocketExchangeValueTo = (pocketValue, currencies) => ({
-  type: 'CHANGE_POCKET_EXCHANGE_VALUE_TO',
+  type: actions.changePocketExchangeValueTo,
   pocketValue,
   currencies
 });
 
 export const exchangeMoney = pocketExchange => ({
-  type: 'EXCHANGE_MONEY',
+  type: actions.exchangeMoney,
   pocketExchange
 });
 
 export const replacePocketsPosition = () => ({
-  type: 'REPLACE_POCKETS_POSITION'
+  type: actions.replacePocketsPosition
 });
