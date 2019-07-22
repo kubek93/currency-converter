@@ -22,7 +22,8 @@ export const languagesActionsTypes = {
 
 export const currencyActionsType = {
   addCurrency: 'ADD_CURRENCY',
-  removeCurrency: 'REMOVE_CURRENCY'
+  removeCurrency: 'REMOVE_CURRENCY',
+  updateCurrencies: 'UPDATE_CURRENCIES'
 };
 
 export const pocketActionsTypes = {

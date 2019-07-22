@@ -1,3 +1,4 @@
+import map from 'lodash/map';
 import { currencySymbol } from './constants';
 
 export const transformSelectOptionsBasedOnCurrencies = currenciesArray => {
@@ -44,4 +45,19 @@ export const exchangeFromTo = (inputValue, currencies, currencyFrom, currencyTo,
   }
 
   return numberAfterPositionFix;
+};
+
+export const parseUrlParams = (params = null) => {
+  console.log('urlParamsWithKey', params);
+  if (params) {
+    let paramsUrlTextParsed = '?';
+
+    map(params, (value, key) => {
+      paramsUrlTextParsed += `${key}=${value}`;
+    });
+
+    return paramsUrlTextParsed;
+  }
+
+  return '';
 };

@@ -3,11 +3,16 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
+import get from 'lodash/get';
+import isEmpty from 'lodash/isEmpty';
 
+import Loader from '../components/LayoutElements/Loader';
 import Button from '../components/LayoutElements/Button';
 import CurrencyCounter from '../components/LayoutElements/CurrencyCounter';
 import { CurrencyExchangeList, CurrencyExchangeListElement } from '../components/CurrencyExchange';
 import { PocketSwitch } from '../components/LayoutElements/PocketSwitch';
+import { getAllCurrencies } from '../services/currencyServices';
+import { updateCurrencies } from '../actions/currencyActions';
 import {
   changePocketExchangeFrom,
   changePocketExchangeTo,
@@ -24,7 +29,12 @@ const CurrencyConverterWrapper = styled.div`
   margin-top: 35px;
 `;
 
-class CurrencyConverter extends React.PureComponent {
+class CurrencyConverter extends React.Component {
+  async componentDidMount() {
+    const response = await getAllCurrencies();
+    this.props.updateCurrencies(get(response, 'data.rates', {}));
+  }
+
   onClickExchange = () => {
     this.props.exchangeMoney(this.props.pocketExchange);
   };
@@ -69,10 +79,14 @@ class CurrencyConverter extends React.PureComponent {
       parseFloat(pocketValueFrom) === 0 ||
       (['', ['0']].includes(pocketValueFrom) || pocketValueFrom > userPocketsById[pocketExchangeFrom].amount);
 
+    if (isEmpty(currencies)) {
+      return <Loader />;
+    }
+
     return (
       <CurrencyConverterWrapper>
         <PocketSwitch>
-          <button onClick={this.replacePocketsPosition}>+</button>
+          <button onClick={this.replacePocketsPosition}>^</button>
         </PocketSwitch>
         <CurrencyCounter
           currencies={currencies}
@@ -115,6 +129,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  updateCurrencies: currencies => dispatch(updateCurrencies(currencies)),
   changePocketExchangeFrom: currencyCode => dispatch(changePocketExchangeFrom(currencyCode)),
   changePocketExchangeTo: currencyCode => dispatch(changePocketExchangeTo(currencyCode)),
   changePocketExchangeValueFrom: (pocketValue, currencies) =>

@@ -9,3 +9,8 @@ export const removeCurrency = currencyName => ({
   type: actions.removeCurrency,
   currencyName
 });
+
+export const updateCurrencies = currencies => ({
+  type: actions.updateCurrencies,
+  currencies
+});
