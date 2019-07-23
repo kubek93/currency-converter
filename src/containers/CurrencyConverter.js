@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 
-import Loader from '../components/LayoutElements/Loader';
-import Button from '../components/LayoutElements/Button';
-import CurrencyCounter from '../components/LayoutElements/CurrencyCounter';
 import { CurrencyExchangeList, CurrencyExchangeListElement } from '../components/CurrencyExchange';
-import { PocketSwitch } from '../components/LayoutElements/PocketSwitch';
 import { getAllCurrencies } from '../services/currencyServices';
+import { PocketSwitch } from '../components/LayoutElements/PocketSwitch';
 import { updateCurrencies } from '../actions/currencyActions';
+import Button from '../components/LayoutElements/Button';
+import CurrencyConverterWrapper from '../components/LayoutElements/CurrencyConverterWrapper';
+import CurrencyCounter from '../components/LayoutElements/CurrencyCounter';
+import Loader from '../components/LayoutElements/Loader';
 import {
   changePocketExchangeFrom,
   changePocketExchangeTo,
@@ -21,13 +21,6 @@ import {
   exchangeMoney,
   replacePocketsPosition
 } from '../actions/pocketActions';
-
-const CurrencyConverterWrapper = styled.div`
-  max-width: 400px;
-  margin: 0 auto;
-  position: relative;
-  margin-top: 35px;
-`;
 
 class CurrencyConverter extends Component {
   async componentDidMount() {
@@ -62,8 +55,8 @@ class CurrencyConverter extends Component {
     changePocketExchangeFrom(event.target.value);
 
     if (event.target.value === pocketExchange.pocketExchangeTo) {
-      const userPocketsAfterRemoveDuplicate = userPocketsAllCurrencies.filter(el => el !== event.target.value);
-      changePocketExchangeTo(userPocketsAfterRemoveDuplicate[0]);
+      const userPocketsAfterRemoveDuplicates = userPocketsAllCurrencies.filter(el => el !== event.target.value);
+      changePocketExchangeTo(userPocketsAfterRemoveDuplicates[0]);
     }
   };
 
@@ -72,8 +65,8 @@ class CurrencyConverter extends Component {
     changePocketExchangeTo(event.target.value);
 
     if (event.target.value === pocketExchange.pocketExchangeFrom) {
-      const userPocketsAfterRemoveDuplicate = userPocketsAllCurrencies.filter(el => el !== event.target.value);
-      changePocketExchangeFrom(userPocketsAfterRemoveDuplicate[0]);
+      const userPocketsAfterRemoveDuplicates = userPocketsAllCurrencies.filter(el => el !== event.target.value);
+      changePocketExchangeFrom(userPocketsAfterRemoveDuplicates[0]);
     }
   };
 
@@ -147,7 +140,7 @@ const mapDispatchToProps = dispatch => ({
   changePocketExchangeValueTo: (pocketValue, currencies) =>
     dispatch(changePocketExchangeValueTo(pocketValue, currencies)),
   exchangeMoney: pocketExchange => dispatch(exchangeMoney(pocketExchange)),
-  replacePocketsPosition: pocketExchange => dispatch(replacePocketsPosition())
+  replacePocketsPosition: () => dispatch(replacePocketsPosition())
 });
 
 CurrencyConverter.propTypes = {

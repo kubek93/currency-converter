@@ -21,11 +21,9 @@ export const generateGetRequestByUrl = async (urlParams = null) => {
       responseType: 'stream'
     });
 
-    console.log('response', response);
-
     return response;
   } catch (err) {
-    throw new Error('Something wrong with generateGetRequestByUrl function!');
+    console.error('Something wrong with generateGetRequestByUrl function!', err);
   }
 };
 
