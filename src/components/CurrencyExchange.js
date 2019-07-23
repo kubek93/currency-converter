@@ -62,11 +62,5 @@ CurrencyExchangeListElement.defaultProps = {
 };
 
 CurrencyExchangeListElement.propTypes = {
-  // exchangeFrom,
-  // onChangePocket,
-  // onChangePocketValue,
-  // pocketExchange,
-  // pocketValue,
   userPocketsAllCurrencies: PropTypes.arrayOf(PropTypes.string)
-  // userPocketsById,
 };
