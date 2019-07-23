@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-import { CURRENCY_SYMBOL } from '../../utils/constants';
+import { currencySymbol } from '../../utils/constants';
 
 const DispalyBalanceWrapper = styled.span`
   font-size: 14px;
@@ -16,7 +16,7 @@ const DispalyBalance = ({ currencyType, currencyValue }) => (
   <DispalyBalanceWrapper>
     <FormattedMessage id="exchange.balance" defaultMessage="exchange.balance" />
     <span>
-      {currencyValue} {CURRENCY_SYMBOL[currencyType]}
+      {currencyValue} {currencySymbol[currencyType]}
     </span>
   </DispalyBalanceWrapper>
 );

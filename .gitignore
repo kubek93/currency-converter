@@ -498,4 +498,7 @@ healthchecksdb
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 MigrationBackup/
 
+# Our own rules
+.env
+
 # End of https://www.gitignore.io/api/osx,macos,windows,webstorm,visualstudio

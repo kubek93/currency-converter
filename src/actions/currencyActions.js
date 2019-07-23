@@ -1,16 +1,16 @@
-export const TypeOfCurrency = {
-  EUR: 'EUR',
-  GPB: 'GPB',
-  PLN: 'PLN',
-  USD: 'USD'
-};
+import { currencyActionsType as actions } from '../utils/constants';
 
 export const addNewCurrency = currencyName => ({
-  type: 'ADD_CURRENCY',
+  type: actions.addCurrency,
   currencyName
 });
 
 export const removeCurrency = currencyName => ({
-  type: 'REMOVE_CURRENCY',
+  type: actions.removeCurrency,
   currencyName
+});
+
+export const updateCurrencies = currencies => ({
+  type: actions.updateCurrencies,
+  currencies
 });

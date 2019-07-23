@@ -1,9 +1,6 @@
-export const TypeOfLanguages = {
-  PL: 'PL',
-  EN: 'EN'
-};
+import { languagesActionsTypes as actions } from '../utils/constants';
 
 export const changeLanguage = languageName => ({
-  type: 'CHANGE_LANGUAGE',
+  type: actions.changeLanguage,
   languageName
 });

@@ -1,9 +1,8 @@
-import { TypeOfLanguages } from "../../actions/languagesActions";
+import { TypeOfLanguages, languagesActionsTypes as actions } from '../../utils/constants';
 
-// eslint-disable-next-line import/prefer-default-export
 const currentLanguageReducer = (state = TypeOfLanguages.EN, action) => {
   switch (action.type) {
-    case "CHANGE_LANGUAGE":
+    case actions.changeLanguage:
       return action.languageName;
     default:
       return state;

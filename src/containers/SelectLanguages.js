@@ -1,16 +1,16 @@
-import React from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import { changeLanguage, TypeOfLanguages } from "../actions/languagesActions";
-import SelectLanguagesWrapper from "../components/SelectLanguages/SelectLanguagesWrapper";
-import SelectLanguagesOption from "../components/SelectLanguages/SelectLanguagesOption";
+import { TypeOfLanguages } from '../utils/constants';
+import { changeLanguage } from '../actions/languagesActions';
+import SelectLanguagesWrapper from '../components/SelectLanguages/SelectLanguagesWrapper';
+import SelectLanguagesOption from '../components/SelectLanguages/SelectLanguagesOption';
 
 const SelectLanguages = props => {
   const { languages, changeCurrentLanguage } = props;
 
-  const onChangeSelectLanguages = event =>
-    changeCurrentLanguage(event.target.value);
+  const onChangeSelectLanguages = event => changeCurrentLanguage(event.target.value);
 
   const renderSelectLanguagesOptions = () => {
     return Object.keys(TypeOfLanguages).map(key => (
