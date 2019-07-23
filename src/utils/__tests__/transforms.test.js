@@ -94,7 +94,6 @@ describe('Tests for exchangeFromTo function', () => {
     USD: 1.1223,
     EUR: 1
   };
-  // oldValue=
 
   it('Should return correct value for exchange PLN to USD', () => {
     const inputValue = '100';

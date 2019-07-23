@@ -1,11 +1,7 @@
 import axios from 'axios';
 import { parseUrlParams } from '../utils/transforms';
 
-//
-//
 // CURRENCY API
-//
-//
 
 export const generateGetRequestByUrl = async (urlParams = null) => {
   const apiUrl = process.env.REACT_APP_CURRENCY_API_URL;
