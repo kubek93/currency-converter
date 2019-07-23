@@ -9,15 +9,12 @@ export const transformSelectOptionsBasedOnCurrencies = currenciesArray => {
 };
 
 export const transformMoney = (inputValue = '', oldValue = '') => {
-  console.log('oldValue', oldValue);
   if (['', ',', '.'].includes(inputValue)) {
     return '';
   }
 
   const priceAfterReplaceComma = inputValue.toString().replace(/,/g, '.');
   const regex = /^\d{0,12}(?:[.]\d{0,2}|$)$/;
-
-  console.log(priceAfterReplaceComma, regex.test(priceAfterReplaceComma));
 
   if (regex.test(priceAfterReplaceComma)) {
     const afterSplit = priceAfterReplaceComma.split('.');
@@ -48,7 +45,6 @@ export const exchangeFromTo = (inputValue, currencies, currencyFrom, currencyTo,
 };
 
 export const parseUrlParams = (params = null) => {
-  console.log('urlParamsWithKey', params);
   if (params) {
     let paramsUrlTextParsed = '?';
 

@@ -4,7 +4,7 @@ import thunkMiddleware from 'redux-thunk';
 import localeEn from 'react-intl/locale-data/en';
 import localePl from 'react-intl/locale-data/pl';
 import languagesReducers from './languagesReducers';
-import currencyReducers from './currencyReducers';
+import currencyReducer from './currencyReducers/currencyReducer';
 import pocketReducers from './pocketReducers/pocketReducer';
 import pocketExchangeReducer from './pocketReducers/pocketExchangeReducer';
 
@@ -12,7 +12,7 @@ addLocaleData([...localeEn, ...localePl]);
 
 const reducers = combineReducers({
   languages: languagesReducers,
-  currenct: currencyReducers,
+  currency: currencyReducer,
   pocket: pocketReducers,
   exchange: pocketExchangeReducer
 });

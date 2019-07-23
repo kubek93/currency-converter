@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -29,11 +29,21 @@ const CurrencyConverterWrapper = styled.div`
   margin-top: 35px;
 `;
 
-class CurrencyConverter extends React.Component {
+class CurrencyConverter extends Component {
   async componentDidMount() {
+    this.fetchCurrencies();
+    this.timer = setInterval(() => this.fetchCurrencies(), 60000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+    this.timer = null;
+  }
+
+  fetchCurrencies = async () => {
     const response = await getAllCurrencies();
     this.props.updateCurrencies(get(response, 'data.rates', {}));
-  }
+  };
 
   onClickExchange = () => {
     this.props.exchangeMoney(this.props.pocketExchange);
@@ -122,7 +132,7 @@ class CurrencyConverter extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  currencies: state.currenct.currency.currencyExchangeRate,
+  currencies: state.currency.currencyExchangeRate,
   userPocketsAllCurrencies: state.pocket.userPocketsAllIds,
   userPocketsById: state.pocket.userPocketsById,
   pocketExchange: state.exchange

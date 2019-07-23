@@ -9,7 +9,7 @@ import { parseUrlParams } from '../utils/transforms';
 
 export const generateGetRequestByUrl = async (urlParams = null) => {
   const apiUrl = process.env.REACT_APP_CURRENCY_API_URL;
-  const apiKey = process.env.REACT_APP_CURRENCT_API_KEY;
+  const apiKey = process.env.REACT_APP_CURRENCY_API_KEY;
   const urlParamsWithKey = { ...urlParams, app_id: apiKey };
   const urlParamsParsed = parseUrlParams(urlParamsWithKey);
   const url = `${apiUrl}/latest.json${urlParamsParsed}`;
@@ -20,6 +20,8 @@ export const generateGetRequestByUrl = async (urlParams = null) => {
       url,
       responseType: 'stream'
     });
+
+    console.log('response', response);
 
     return response;
   } catch (err) {
